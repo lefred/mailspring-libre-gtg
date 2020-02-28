@@ -8,16 +8,15 @@ export default class MyGtg extends React.Component {
   _toGtg() {
       // Function calling GTG via dbus
       var DBus = require("dbus");
-      //var bus = DBus.getBus('session');
-      //bus.getInterface('org.gnome.GTG', '/org/gnome/GTG', 'org.gnome.GTG', function(err, iface) {
-      //    if (err) {
-      //        return console.log(err)
-      //    }
-	  //    iface.OpenNewTask("Test from NodeJS","This is the body", { timeout: 10 }, function(err, result) {
-      //        return console.log("Task added in GTG");
-      //    });
-      //});
-      return console.log("Task added in GTG");
+      var bus = DBus.getBus('session');
+      bus.getInterface('org.gnome.GTG', '/org/gnome/GTG', 'org.gnome.GTG', function(err, iface) {
+          if (err) {
+              return console.log(err)
+          }
+	      iface.OpenNewTask("Test from NodeJS","This is the body", { timeout: 10 }, function(err, result) {
+              return console.log("Task added in GTG");
+          });
+      });
   }
 
   _renderContent() {
