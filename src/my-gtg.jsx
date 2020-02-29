@@ -1,4 +1,4 @@
-import { React, FocusedContactsStore } from "mailspring-exports";
+import { React, MessageStore } from "mailspring-exports";
 import { RetinaImg } from 'mailspring-component-kit';
 
 
@@ -10,12 +10,15 @@ export default class MyGtg extends React.Component {
       var DBus = require("dbus");
       var bus = DBus.getBus('session');
       bus.getInterface('org.gnome.GTG', '/org/gnome/GTG', 'org.gnome.GTG', function(err, iface) {
-          if (err) {
-              return console.log(err)
-          }
-	      iface.OpenNewTask("Test from NodeJS","This is the body", { timeout: 10 }, function(err, result) {
+        if (err) {
+            return console.log(err)
+        }
+        // Should get the message from the focused/active message in MessageList
+        var topic = "Yet to find ;)"
+        var body = "Yet to find too..."
+	      iface.OpenNewTask(topic, body, { timeout: 10 }, function(err, result) {
               return console.log("Task added in GTG");
-          });
+        });
       });
   }
 
