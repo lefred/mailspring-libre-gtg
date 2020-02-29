@@ -1,9 +1,14 @@
-import { React, MessageStore } from "mailspring-exports";
+import { React, FocusedContentStore } from "mailspring-exports";
 import { RetinaImg } from 'mailspring-component-kit';
 
 
 export default class MyGtg extends React.Component {
   static displayName = "MyGtg";
+
+  constructor(props) {
+    super(props);
+  }
+
 
   _toGtg() {
       // Function calling GTG via dbus
@@ -14,8 +19,9 @@ export default class MyGtg extends React.Component {
             return console.log(err)
         }
         // Should get the message from the focused/active message in MessageList
-        var topic = "Yet to find ;)"
-        var body = "Yet to find too..."
+        const thread = FocusedContentStore.focused('thread');
+        var topic = thread.subject
+        var body =  thread
 	      iface.OpenNewTask(topic, body, { timeout: 10 }, function(err, result) {
               return console.log("Task added in GTG");
         });
