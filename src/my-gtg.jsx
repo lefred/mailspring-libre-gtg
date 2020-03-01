@@ -1,5 +1,6 @@
 import { React, FocusedContentStore, DatabaseStore, Message } from "mailspring-exports";
 import { RetinaImg } from 'mailspring-component-kit';
+import { convertToPlainText, convertFromHTML } from './conversion';
 
 const DBus = require("dbus");
 const bus = DBus.getBus('session');
@@ -22,13 +23,14 @@ export default class MyGtg extends React.Component {
         // Should get the message from the focused/active message in MessageList
         const thread = FocusedContentStore.focused('thread');
         var topic = thread.subject
-        console.log(thread.id)
         const query = DatabaseStore.findBy(Message, { threadId: thread.id })
         .order(Message.attributes.date.descending())
         .limit(1);
+        query.include(Message.attributes.body);        
         DatabaseStore.run(query).then(async msg => {
-        body = encodeURIComponent(msg.snippet)
-	      iface.OpenNewTask(topic, msg.snippet, { timeout: 10 }, function(err, result) {
+        //var body = msg.plaintext ? msg.body : convertToPlainText(convertFromHTML(msg.body)).trim()
+        var body = msg.plaintext ? msg.body : msg.snippet
+	      iface.OpenNewTask(topic, body, { timeout: 10 }, function(err, result) {
               return console.log("Task added in GTG");
         });        
       })
