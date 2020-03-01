@@ -25,16 +25,13 @@ export default class MyGtg extends React.Component {
         console.log(thread.id)
         const query = DatabaseStore.findBy(Message, { threadId: thread.id })
         .order(Message.attributes.date.descending())
-        .limit(1); 
-        const msg = DatabaseStore.run(query);    
-        var body = (msg && msg.body) || '';
-        console.log(msg)
-        console.log(msg.snippet)
-        console.log(body)
+        .limit(1);
+        DatabaseStore.run(query).then(async msg => {
         body = encodeURIComponent(msg.snippet)
 	      iface.OpenNewTask(topic, msg.snippet, { timeout: 10 }, function(err, result) {
               return console.log("Task added in GTG");
-        });
+        });        
+      })
       });
   }
 
