@@ -29,7 +29,15 @@ export default class MyGtg extends React.Component {
         query.include(Message.attributes.body);        
         DatabaseStore.run(query).then(async msg => {
         //var body = msg.plaintext ? msg.body : convertToPlainText(convertFromHTML(msg.body)).trim()
-        var body = msg.plaintext ? msg.body : msg.snippet
+        var body = ""
+        if (msg.plaintext) {
+          body = msg.body
+        } else {
+           var tmp = document.createElement("div");
+           tmp.innerHTML = msg.body;
+           body = tmp.textContent || tmp.innerText || "";
+        }
+        //var body = msg.plaintext ? msg.body : msg.snippet
 	      iface.OpenNewTask(topic, body, { timeout: 10 }, function(err, result) {
               return console.log("Task added in GTG");
         });        
