@@ -19,7 +19,8 @@
   "description": "Add task from mail to GTG via DBUS",
   "devDependencies": {
     "@types/react": "^16.7.22",
-    "dbus": "^1.0.0",
+    "dbus": "^1.0.7",
+    "electron-rebuild": "^1.10.0",
     "typescript": "^3.6.3"
   },
   "license": "MIT"
