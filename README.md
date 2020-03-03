@@ -17,3 +17,8 @@ export npm_config_runtime=electron
 export npm_config_build_from_source=true
 HOME=~/.electron-gyp npm install
 ```
+
+In action:
+
+![output](https://user-images.githubusercontent.com/609675/75770535-6747ab00-5d48-11ea-910a-7946ce7d5ebb.gif)
+
